@@ -1,0 +1,6 @@
+[run]
+source = .
+omit = venv/* , test_api.py
+
+[report]
+show_missing = True

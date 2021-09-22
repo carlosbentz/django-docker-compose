@@ -2,32 +2,41 @@
 
 ### Adicione aqui os erros e correções aplicadas
 
-### EXEMPLO
+Nào tinha psycopg2 instalado
+post retornava ok
+python 2.7 dockerfile
+
 ---
-**Código com erro:**  
+
+**Erro:** Ausência de volumes no docker-compose.yml
+**O que ele causa:** Não persistência de dados
+**Como corrigir:** Adicionar o volumes
+
+**Código corrigido:**
+
 ```sh
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-]
+db:
+    volumes:
+        - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    external: true
 ```
-**Erro:** O app "songs" não está declarado em INSTALLED_APPS  
-**O que ele causa:** O Django não consegue identificar as informações desse app para executá-lo.  
-**Como corrigir:** Incluir a linha com o nome do app "songs" dentro de INSTALLED_APPS, fazendo com que ele seja reconhecido pelo Django.  
-**Código corrigido:**   
+
+**Código com erro:**
+
 ```sh
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "songs"
-]
+return Response(serializer.data, status=status.HTTP_200_OK)
 ```
+
+**Erro:** O post retorna "ok" ao invés de "created"
+**O que ele causa:** Confusão na response
+**Como corrigir:** Modificar o status para HTTP_201_CREATED
+**Código corrigido:**
+
+```sh
+return Response(serializer.data, status=status.HTTP_201_CREATED)
+```
+
 ---
