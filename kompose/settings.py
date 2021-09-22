@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure--%^o^f1ju^5(&48b%3whbs@pzh1*uk@8m7t!k5_+yi@b!uncx2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["bentz-kompose.herokuapp.com"]
 
