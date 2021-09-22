@@ -5,6 +5,12 @@
 Nào tinha psycopg2 instalado
 post retornava ok
 python 2.7 dockerfile
+servico django nao existe
+faltando o build . no web
+ordem de workdir e copy no docker file
+porta web errada 8000:8001
+falta de arquivo heroku
+lib dj_database_url
 
 ---
 

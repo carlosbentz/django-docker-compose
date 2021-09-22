@@ -6,32 +6,32 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./db/data/postgres:/var/lib/postgresql/data
 
   migration:
     build: .
     env_file: envs/dev.env
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py migrate'
 
-    stdin_open: true
-    tty: true
-
     depends_on:
       - db
 
   web:
+    build: .
     env_file: envs/dev.env
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
+
+    volumes:
+      - .:/code
 
     stdin_open: true
     tty: true
     ports:
-      - 8000:8001
+      - 8000:8000
 
     depends_on:
       - db
       - migration
-
-volumes:
-  pgdata:
-    external: true
+# volumes:
+#   pgdata:
+#     external: true

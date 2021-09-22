@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = "django-insecure--%^o^f1ju^5(&48b%3whbs@pzh1*uk@8m7t!k5_+yi@b!uncx2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["bentz-kanvas.herokuapp.com", "0.0.0.0"]
 
 
 # Application definition
@@ -87,14 +88,20 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql", # was postgres
-            "NAME":  "kompose",#os.getenv("DB"),
-            "USER": "bentz",#os.getenv("USER"),
-            "PASSWORD": "123",#os.getenv("PASSWORD"),
-            "HOST": "localhost", # was database
+            "NAME":  os.getenv("DB"),
+            "USER": os.getenv("USER"),
+            "PASSWORD": os.getenv("PASSWORD"),
+            "HOST": "db", # was database
             "PORT": 5432,
         }
     }
 
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    db_from_env = dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+    DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
